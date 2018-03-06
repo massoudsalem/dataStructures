@@ -17,14 +17,16 @@ class mLinkedList{
     mNode<T>* findNode();
   private:
     mNode<T>* head;  //head of the list.
-    sz=0;
+    int sz=0;
 };
 
-bool mLinkedList::empty(){
+template <typename T>
+bool mLinkedList<T>::empty(){
   return head==NULL; //if the head == null then there is no elments in the list yet.
 }
 
-void mLinkedList::print(){
+template <typename T>
+void mLinkedList<T>::print(){
   mNode<T>* currNode=head; //start with the head of the list
   int index=0;  //zero based linkedList
   if(empty()){
@@ -42,30 +44,33 @@ int size(){
   return sz;
 }
 
-void mLinkedList::insert(int index,T x){
+template <typename T>
+void mLinkedList<T>::insert(int index,T x){
   if(index <0){ //insureing the index of the insertion.
     cout<<"Index error please try again"<<endl;
     return;
   }
   mNode<T>* newNode= new mNode<T>*; //Creating node that carry the data needed.
   newNode->data = x;  //Passing data to the newNode
-  if(index==0){ //In case of adding in the beginning
-    newNode->next = head; //
-    head = newNode;
+  if(index==0){ //In case of adding in the beginning.
+    newNode->next = head; //moving head data.
+    head = newNode; //replace head data with the newone.
   }else{
-    int currIndex=0;
-    mNode<T>* currNode=head;
+    int currIndex=0;  //assume that current index is 0.
+    mNode<T>* currNode=head;  //start from head.
     while (currNode && index >= currIndex) {
-      currNode = currNode->next;
-      ++currIndex;
+      //while currNode!=NULL then the current node is not the last node or the targeted element
+      currNode = currNode->next; //moving current node.
+      ++currIndex; //increasing the index.
     }
-    newNode->next=currNode;
-    currNode->next=newNode;
+    newNode->next=currNode->next; //moving currNode next
+    currNode->next=newNode; //insert after the currNode
   }
-  ++sz;
+  ++sz;//increasing the size of the linkedList
 }
 
-int mLinkedList::findNode(T x){
+template <typename T>
+int mLinkedList<T>::findNode(T x){
   int currIndex=0;
   mNode<T>* currNode=head;
   while (currNode && currNode->data!=x) {
@@ -75,9 +80,10 @@ int mLinkedList::findNode(T x){
   return currIndex;
 }
 
-int mLinkedList::erase(T x){
-  mNode* prevNode = NULL;
-  mNode* currNode = NULL;
+template <typename T>
+int mLinkedList<T>::erase(T x){
+  mNode<T>* prevNode = NULL;
+  mNode<T>* currNode = NULL;
   currIndex=0;
   while (currNode && currNode->data!=x) {
     prevNode = currNode;
@@ -97,8 +103,9 @@ int mLinkedList::erase(T x){
   return -1;
 }
 
-mLinkedList::~mLinkedList(){
-  Node* currNode = head, *nextNode = NULL;
+template <typename T>
+void mLinkedList<T>::~mLinkedList(){
+  Node<T>* currNode = head, *nextNode = NULL;
   while (currNode != NULL)
   {
     nextNode = currNode->next;

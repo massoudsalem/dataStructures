@@ -5,7 +5,8 @@ using namespace std;
 
 template <typename T>
 class mNode{
-    friend class mLinkedList<T>;
+    template <typename T>
+    friend class mLinkedList;
     //making a friend in order to give it an access to all the private and protected member of that class
   private:
     T data{}; //storing data of Type T

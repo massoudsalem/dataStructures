@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-  mLinkedList <int> intlist;
+  mLinkedList <int> intlist();
   intlist.insert(0,4);
   intlist.insert(1,4);
   intlist.insert(2,4);
