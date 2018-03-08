@@ -40,7 +40,7 @@ class mLinkedList{
         return;
       }
       if(index>sz){
-        index=sz;
+        index=sz; //inorder to add element in the last palce of the list.
       }
       mNode<T>* newNode = new mNode<T>(x); //Creating node that carry the data needed.
 
@@ -62,49 +62,61 @@ class mLinkedList{
     }
 
     int findNode(T x){
-      int currIndex=0;
-      mNode<T>* currNode=head;
-      while (currNode && currNode->data!=x) {
-        currNode = currNode->next;
-        ++currIndex;
+      int currIndex=0;  //start index form 0.
+      mNode<T>* currNode=head; //inialize the currNode with the head of the linkedList.
+      while (currNode && currNode->data!=x) { //break the loop if you find the targeted element or the list is finished without finding it.
+        currNode = currNode->next; //rolling of the list.
+        ++currIndex; //increasing the index with rolling.
       }
-      return (currNode ? currIndex:-1);
+      return (currNode ? currIndex:-1);//return index if the targeted element found.
     }
 
     int erase(T x){
-      mNode<T>* prevNode = NULL;
-      mNode<T>* currNode = head;
-      int currIndex=0;
-      while (currNode && currNode->data!=x) {
-        prevNode = currNode;
+      mNode<T>* prevNode = NULL;  //inialize the prevNode with null prevNode is previous node.
+      mNode<T>* currNode = head;  //inialize the currNode with head currNode is currnet node node.
+      int currIndex=0;  //start index form 0.
+      while (currNode && currNode->data!=x) { //break the loop if you find the targeted element or the list is finished without finding it.
+        prevNode = currNode;  //moving nodes pointers.
         currNode = currNode->next;
-        ++currIndex;
+        ++currIndex;  //increasing the index.
       }
-      if(currNode){
-        if(prevNode){
+      if(currNode){ // if it's not the end of the list.
+        if(prevNode){ //move the prevNode points on the currNode next.
           prevNode->next=currNode->next;
-        }else{
+        }else{  //then the targeted node is the '0' index one.
           head=currNode->next;
           delete currNode;
         }
-        --sz;
-        return currIndex;
+        --sz; //resize the list by decreasing it by 1.
+        return currIndex; //return the index of the erased element.
       }
-      return -1;
+      return -1;  //return the -1 if the element isn't found.
+    }
+
+    void destroymLinkedList(){
+      mNode<T>* currNode = head, *nextNode = NULL;  //start the list form head and inialize the next element with null.
+      while (currNode)  //loop breaks when the null element found "last element" on the list
+      {
+        nextNode = currNode->next;  //rolling on the list
+        delete currNode;  //delete the current node
+        currNode = nextNode;  //move the current pointer
+      }
+      head=NULL;
     }
 
     ~mLinkedList(){
-      mNode<T>* currNode = head, *nextNode = NULL;
-      while (currNode != NULL)
+      mNode<T>* currNode = head, *nextNode = NULL;  //start the list form head and inialize the next element with null.
+      while (currNode)  //loop breaks when the null element found "last element" on the list
       {
-        nextNode = currNode->next;
-        delete currNode;
-        currNode = nextNode;
+        nextNode = currNode->next;  //rolling on the list
+        delete currNode;  //delete the current node
+        currNode = nextNode;  //move the current pointer
       }
+      delete head;  //deleting list head.
     }
   private:
     mNode<T>* head;  //head of the list.
-    int sz;
+    int sz; //size of the list
 };
 
 #endif
