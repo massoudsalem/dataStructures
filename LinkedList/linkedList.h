@@ -58,19 +58,19 @@ class mLinkedList{
       ++sz;//increasing the size of the linkedList
     }
 
-    mNode<T>* findNode(T x){
+    int findNode(T x){
       int currIndex=0;
       mNode<T>* currNode=head;
       while (currNode && currNode->data!=x) {
         currNode = currNode->next;
         ++currIndex;
       }
-      return currIndex;
+      return (currNode ? currIndex:-1);
     }
 
     int erase(T x){
       mNode<T>* prevNode = NULL;
-      mNode<T>* currNode = NULL;
+      mNode<T>* currNode = head;
       int currIndex=0;
       while (currNode && currNode->data!=x) {
         prevNode = currNode;
@@ -79,14 +79,14 @@ class mLinkedList{
       }
       if(currNode){
         if(prevNode){
-          prevNode=currNode->next;
+          prevNode->next=currNode->next;
         }else{
           head=currNode->next;
           delete currNode;
         }
+        --sz;
         return currIndex;
       }
-      cout<<"element is not found"<<endl;
       return -1;
     }
 
