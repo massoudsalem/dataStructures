@@ -12,6 +12,7 @@ int main(){
   intlist.insert(2,7);
   intlist.insert(0,7);
   intlist.insert(3,4);
+  intlist.insert(20,4);
   printf("The list contains:\n");
   intlist.print();
   printf("Size of List is %d\n",intlist.size());

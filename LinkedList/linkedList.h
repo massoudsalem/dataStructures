@@ -39,6 +39,9 @@ class mLinkedList{
         cout<<"Index error please try again"<<endl;
         return;
       }
+      if(index>sz){
+        index=sz;
+      }
       mNode<T>* newNode = new mNode<T>(x); //Creating node that carry the data needed.
 
       if(index==0){ //In case of adding in the beginning.
