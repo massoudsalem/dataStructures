@@ -13,7 +13,8 @@ class binarySearchTree:
         for i in list:
             self.insert(i)
     def __str__(self):
-        return self._printTree()
+        Str=self._printTree()
+        return Str if Str!="[]" else "This tree is empty."
 
     def insert(self, value):
         if self.root==node(value):
@@ -167,3 +168,4 @@ y.delete(3)
 print(y.height())
 y.delete(4)
 print(y.height())
+print(y)
