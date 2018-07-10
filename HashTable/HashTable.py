@@ -23,7 +23,8 @@ class HashTable:
         return str[:-2]
 
     def __str__(self):
-        return "[" + self._genStr() + "]" + "\nCapacity of HashTable is {}".format(self.capacity)
+        return "[" + self._genStr() + "]"
+               # + "\nCapacity of HashTable is {}".format(self.capacity)
 
     def _hash(self, key):
         sum = 0
