@@ -34,6 +34,9 @@ class HashTable:
 
     def insert(self, key, value, notOperation=True):
         index = self._hash(key)
+        if self._find(key) != -1:
+            self.list[index].value = value
+            return
         while (self.list[index] != None and self.list[index].deleted != True):
             index += 1
         self.list[index] = node(key, value)
@@ -127,3 +130,10 @@ print(h)
 h.remove("map4")
 print(h)
 print(h.getValue("map8"))
+h.insert('map1', 12)
+print(h)
+h.insert('map1', 16)
+h.remove('map1')
+print(h)
+h.insert('map1', 13)
+print(h)
