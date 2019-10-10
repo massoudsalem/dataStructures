@@ -84,7 +84,7 @@ class LinkedList<T>{
         nextLink.previous = newLink;
     }
 
-    public void delete(Link Target){
+    public Link delete(Link Target){
         if(Target == first){
             first = Target.next;
         }else{
@@ -95,6 +95,7 @@ class LinkedList<T>{
         }else{
             Target.next.previous = Target.previous;
         }
+        return Target;
     }
 
     public void displayList(){
