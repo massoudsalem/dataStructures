@@ -10,6 +10,7 @@ class Queue<T>{
 
     Node front;
     Node rear;
+    Integer size = 0;
 
     public boolean isEmpty(){
         return front == null;
@@ -22,6 +23,7 @@ class Queue<T>{
         else
             rear.next = node;
         rear = node;
+        size++;
     }
 
     public T pop(){
@@ -30,7 +32,12 @@ class Queue<T>{
             return null;
         temp = front;
         front = front.next;
+        size--;
         return (T) temp.data;
+    }
+
+    public Integer size(){
+        return size;
     }
 
     public T front() throws Exception{
