@@ -117,12 +117,12 @@ public class BinarySearchTree<T> {
 
     public Node findMinimum(Node currentNode){
         while(currentNode.getLeftChild() != null)
-            currentNode = currentNode.getRightChild();
+            currentNode = currentNode.getLeftChild();
         return currentNode;
     }
 
     public Node findMaximum(Node currnetNode){
-        while(currnetNode.getLeftChild() != null)
+        while(currnetNode.getRightChild() != null)
             currnetNode = currnetNode.getRightChild();
         return currnetNode;
     }
@@ -163,12 +163,16 @@ public class BinarySearchTree<T> {
     }
 
     public void delete(Node nodeToBeDeleted) {
+        if(nodeToBeDeleted == null){
+            System.out.println("Node not found");
+            return;
+        }
         if (nodeToBeDeleted.getLeftChild() == null) {
             transplant(nodeToBeDeleted, nodeToBeDeleted.getRightChild());
         } else if (nodeToBeDeleted.getRightChild() == null) {
             transplant(nodeToBeDeleted, nodeToBeDeleted.getLeftChild());
         } else {
-            Node successor = findMinimum(nodeToBeDeleted);
+            Node successor = findMinimum(nodeToBeDeleted.getRightChild());
             if (successor.getParent() != nodeToBeDeleted) {
                 transplant(successor, successor.getRightChild());
                 successor.setRightChild(nodeToBeDeleted.getRightChild());
@@ -222,21 +226,54 @@ public class BinarySearchTree<T> {
         System.out.print("]\n");
     }
 
+    public int getHeight(Node currentNode){
+        //Height is edges not nodes so return -1 not 0
+        if(currentNode == null)
+            return -1;
+
+        return 1 + Math.max(getHeight(currentNode.getRightChild()),getHeight(currentNode.getLeftChild()));
+    }
+
+    public int countNodes(Node currentNode){
+        if(currentNode == null)
+            return 0;
+
+        return 1 + countNodes(currentNode.getLeftChild()) + countNodes(currentNode.getRightChild());
+    }
+
+    public int countNodesWithRightChild(Node currentNode){
+        if(currentNode == null)
+            return 0;
+
+        return (currentNode.getRightChild() != null ? 1:0) + countNodesWithRightChild(currentNode.getLeftChild()) + countNodesWithRightChild(currentNode.getRightChild());
+    }
+
+
     public static void main(String args[]){
         BinarySearchTree binarySearchTree = new BinarySearchTree();
         binarySearchTree.insert(0);
         binarySearchTree.insert(1);
         binarySearchTree.insert(2);
         binarySearchTree.insert(-1);
-        binarySearchTree.printBFS(binarySearchTree.getRoot());
-        binarySearchTree.delete(binarySearchTree.search(0));
-        binarySearchTree.printBFS(binarySearchTree.getRoot());
-        binarySearchTree.delete(binarySearchTree.search(-1));
+        System.out.println("Edge height = "+binarySearchTree.getHeight(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
         binarySearchTree.printBFS(binarySearchTree.getRoot());
         binarySearchTree.delete(binarySearchTree.search(1));
+        System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
+        binarySearchTree.printBFS(binarySearchTree.getRoot());
+        binarySearchTree.delete(binarySearchTree.search(-1));
+        System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
+        binarySearchTree.printBFS(binarySearchTree.getRoot());
+        binarySearchTree.delete(binarySearchTree.search(0));
+        System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
         binarySearchTree.printBFS(binarySearchTree.getRoot());
         binarySearchTree.delete(binarySearchTree.search(2));
+        System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
+        System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
         binarySearchTree.printBFS(binarySearchTree.getRoot());
-
     }
 }
