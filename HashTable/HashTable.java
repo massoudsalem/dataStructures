@@ -43,6 +43,17 @@ public class HashTable<M,N>{
         return key.hashCode() % capacity;
     }
 
+    private int quadraticProbing(boolean quadraticOrLinear, int i){
+        return quadraticOrLinear ? i*i:i;
+    }
+
+    private int hash2(M key, boolean doubleHash){
+        if(!doubleHash)
+            return 1;
+        return (((key.hashCode() * 353) % 1000000007) * 23) % capacity;
+    }
+
+
     public void insert(M key, N value){
         int found = find(key);
 
@@ -85,9 +96,12 @@ public class HashTable<M,N>{
     }
 
     private int find(M key){
+        //you can turn double hashing or quadratic hashing
+        // by pass true to it's function neither is Linear
+
         int hashedKey = hash(key), index = hashedKey, i = 0;
         while(table[index] != null && table[index].getKey() != key){
-            index = (hashedKey + i) % capacity;
+            index = (hashedKey + quadraticProbing(false,i) * hash2(key,false)) % capacity;
             i++;
         }
         if(table[index] != null && !table[index].isDeleted() && table[index].getKey() == key)
