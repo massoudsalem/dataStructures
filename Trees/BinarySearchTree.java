@@ -68,19 +68,17 @@ public class BinarySearchTree<T> {
     }
 
     public Node search(Integer key){
-        if(root == null)
-            return null;
         return supportSearch(root, key);
     }
+
     private Node supportSearch(Node currentNode, Integer key){
-        if(currentNode.getKey() == key)
+        if(currentNode == null || currentNode.getKey() == key)
             return currentNode;
-        else if (currentNode.getKey() > key && currentNode.getLeftChild() != null)
+        if (currentNode.getKey() > key)
             return supportSearch(currentNode.getLeftChild(),key);
-        else if (currentNode.getKey() < key && currentNode.getRightChild() != null)
-            return supportSearch(currentNode.getRightChild(), key);
-        return null;
+        return supportSearch(currentNode.getRightChild(), key);
     }
+
     public boolean find(Integer key){
         if(search(key) != null)
             return true;
@@ -140,7 +138,7 @@ public class BinarySearchTree<T> {
 
     public Node predecessor(Node currentNode){
         if(currentNode.getLeftChild() != null)
-            return findMaximum(currentNode);
+            return findMaximum(currentNode.getLeftChild());
         Node parent = currentNode.getParent();
         while(parent.getParent() != null && currentNode == parent.getLeftChild()){
             currentNode = parent;
@@ -259,6 +257,8 @@ public class BinarySearchTree<T> {
         System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
         System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
         binarySearchTree.printBFS(binarySearchTree.getRoot());
+        System.out.println(binarySearchTree.successor(binarySearchTree.search(2)));
+        System.out.println(binarySearchTree.predecessor(binarySearchTree.search(2)));
         binarySearchTree.delete(binarySearchTree.search(1));
         System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
         System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
@@ -267,6 +267,7 @@ public class BinarySearchTree<T> {
         System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
         System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
         binarySearchTree.printBFS(binarySearchTree.getRoot());
+        System.out.println(binarySearchTree.successor(binarySearchTree.search(2)));
         binarySearchTree.delete(binarySearchTree.search(0));
         System.out.println("Count Nodes = " + binarySearchTree.countNodes(binarySearchTree.getRoot()));
         System.out.println("Count Nodes With RightChild= " + binarySearchTree.countNodesWithRightChild(binarySearchTree.getRoot()));
